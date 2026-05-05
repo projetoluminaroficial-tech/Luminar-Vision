@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="utf-8">
-<title>Luminar Vision - MindAR</title>
+<title>Luminar Vision - FINAL</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
@@ -14,16 +14,24 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: sans-serif;
   background: #000;
+  font-family: sans-serif;
 }
 
+/* força o vídeo ocupar tudo */
+video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+/* cena full */
 a-scene {
   position: fixed !important;
   inset: 0;
 }
 
-/* Tela inicial */
+/* tela inicial */
 #start {
   position: fixed;
   inset: 0;
@@ -56,8 +64,8 @@ a-scene {
 #scanner {
   position: absolute;
   top: 50%; left: 50%;
-  width: 220px;
-  height: 220px;
+  width: 240px;
+  height: 240px;
   transform: translate(-50%, -50%);
   border: 2px solid cyan;
   border-radius: 12px;
@@ -80,16 +88,19 @@ a-scene {
 
 <body>
 
+<!-- START -->
 <div id="start">
   <h1>Luminar Vision</h1>
   <button id="btnStart">Iniciar AR</button>
 </div>
 
+<!-- UI -->
 <div id="ui">
   <div id="scanner"></div>
   <div id="hint">Aguardando imagem...</div>
 </div>
 
+<!-- SCENE -->
 <a-scene
   id="scene"
   mindar-image="imageTargetSrc: trilhas/citologia/celula_animal/targets.mind; autoStart: false;"
@@ -104,16 +115,17 @@ a-scene {
     <a-asset-item id="modelo" src="trilhas/citologia/celula_animal/celula_animal_3d.glb"></a-asset-item>
   </a-assets>
 
-  <!-- LUZ (ESSENCIAL) -->
-  <a-entity light="type: ambient; intensity: 1"></a-entity>
+  <!-- LUZ -->
+  <a-entity light="type: ambient; intensity: 1.2"></a-entity>
   <a-entity light="type: directional; intensity: 1" position="0 1 1"></a-entity>
 
   <!-- TARGET -->
   <a-entity id="target" mindar-image-target="targetIndex: 0">
 
+    <!-- 🔥 MODELO GRANDE E CENTRAL -->
     <a-entity
       gltf-model="#modelo"
-      scale="0.05 0.05 0.05"
+      scale="1 1 1"
       position="0 0 0"
       rotation="0 0 0"
       animation="property: rotation; to: 0 360 0; loop: true; dur: 6000">
@@ -143,13 +155,11 @@ btnStart.addEventListener("click", async () => {
 
 // eventos
 target.addEventListener("targetFound", () => {
-  console.log("DETECTOU");
   scanner.classList.add("detected");
   hint.textContent = "Imagem detectada!";
 });
 
 target.addEventListener("targetLost", () => {
-  console.log("PERDEU");
   scanner.classList.remove("detected");
   hint.textContent = "Aponte para a imagem";
 });
