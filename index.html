@@ -2,72 +2,86 @@
 <html lang="pt-br">
 <head>
 <meta charset="utf-8">
-<title>Luminar Vision MVP</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Luminar Vision - MindAR</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- A-Frame -->
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.js"></script>
+
+<!-- MindAR -->
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
 <style>
-body { margin:0; overflow:hidden; background:#000; font-family:sans-serif; }
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+  background: #000;
+}
 
 /* Tela inicial */
 #start {
-  position:fixed; inset:0;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  background:#000; color:#fff;
-  z-index:100;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  color: #fff;
+  z-index: 100;
 }
 
-#start button {
-  padding:14px 28px;
-  border-radius:30px;
-  border:2px solid cyan;
-  background:transparent;
-  color:cyan;
-  cursor:pointer;
+#btnStart {
+  padding: 14px 28px;
+  border-radius: 30px;
+  border: 2px solid cyan;
+  background: transparent;
+  color: cyan;
+  cursor: pointer;
 }
 
 /* UI */
 #ui {
-  position:fixed; inset:0;
-  display:none;
-  pointer-events:none;
+  position: fixed;
+  inset: 0;
+  display: none;
+  pointer-events: none;
 }
 
 #top {
-  position:absolute;
-  top:0; left:0; right:0;
-  height:50px;
-  background:rgba(0,0,0,0.6);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 10px;
-  pointer-events:all;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50px;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  pointer-events: all;
 }
 
 #scanner {
-  position:absolute;
-  top:50%; left:50%;
-  width:220px; height:220px;
-  transform:translate(-50%,-50%);
-  border:2px solid cyan;
-  border-radius:12px;
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 220px;
+  height: 220px;
+  transform: translate(-50%, -50%);
+  border: 2px solid cyan;
+  border-radius: 12px;
 }
 
 .detected {
-  border-color:#00ff88 !important;
-  box-shadow:0 0 20px #00ff88;
+  border-color: #00ff88 !important;
+  box-shadow: 0 0 20px #00ff88;
 }
 
 #hint {
-  position:absolute;
-  bottom:80px;
-  width:100%;
-  text-align:center;
-  color:#ccc;
+  position: absolute;
+  bottom: 80px;
+  width: 100%;
+  text-align: center;
+  color: #ccc;
 }
 </style>
 </head>
@@ -77,8 +91,8 @@ body { margin:0; overflow:hidden; background:#000; font-family:sans-serif; }
 <!-- Tela inicial -->
 <div id="start">
   <h1>Luminar Vision</h1>
-  <p>Aponte para o marcador</p>
-  <button id="btnStart">Iniciar</button>
+  <p>Aponte para a imagem</p>
+  <button id="btnStart">Iniciar AR</button>
 </div>
 
 <!-- UI -->
@@ -87,63 +101,67 @@ body { margin:0; overflow:hidden; background:#000; font-family:sans-serif; }
     <span>Luminar AR</span>
     <button onclick="location.reload()">Sair</button>
   </div>
+
   <div id="scanner"></div>
-  <div id="hint">Aguardando marcador...</div>
+  <div id="hint">Aguardando imagem...</div>
 </div>
 
-<!-- Cena AR -->
+<!-- Cena -->
 <a-scene
-embedded
-vr-mode-ui="enabled: false"
-renderer="logarithmicDepthBuffer: true;"
-arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
+  id="scene"
+  mindar-image="imageTargetSrc: trilhas/citologia/celula_animal/targets.mind; autoStart: false;"
+  embedded
+  color-space="sRGB"
+  renderer="colorManagement: true"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false"
+>
 
   <a-assets>
+    <!-- 🔥 AJUSTE SE PRECISAR -->
     <a-asset-item id="modelo" src="trilhas/citologia/celula_animal/celula_animal_3d.glb"></a-asset-item>
   </a-assets>
 
-  <a-nft
-    id="marker"
-    type="nft"
-    url="trilhas/citologia/celula_animal/celula_animal"
-    smooth="true"
-    smoothCount="10"
-    smoothTolerance="0.01"
-    smoothThreshold="5"
-  >
+  <!-- TARGET -->
+  <a-entity id="target" mindar-image-target="targetIndex: 0">
     <a-entity
       gltf-model="#modelo"
       scale="0.3 0.3 0.3"
-      rotation="-90 0 0"
-      animation="property: rotation; to: -90 360 0; loop: true; dur: 6000; easing: linear"
-    ></a-entity>
-  </a-nft>
+      rotation="0 0 0"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 6000">
+    </a-entity>
+  </a-entity>
 
-  <a-entity camera></a-entity>
+  <a-camera position="0 0 0"></a-camera>
 </a-scene>
 
 <script>
-const start = document.getElementById('start');
-const ui = document.getElementById('ui');
-const scanner = document.getElementById('scanner');
-const hint = document.getElementById('hint');
-const marker = document.getElementById('marker');
+const btnStart = document.getElementById("btnStart");
+const start = document.getElementById("start");
+const ui = document.getElementById("ui");
+const scanner = document.getElementById("scanner");
+const hint = document.getElementById("hint");
+const scene = document.querySelector("a-scene");
+const target = document.getElementById("target");
 
-document.getElementById('btnStart').onclick = () => {
-  start.style.display = 'none';
-  ui.style.display = 'block';
-  setTimeout(() => window.dispatchEvent(new Event('resize')), 300);
-};
+btnStart.addEventListener("click", async () => {
+  const arSystem = scene.systems["mindar-image-system"];
 
-// feedback visual
-marker.addEventListener('markerFound', () => {
-  scanner.classList.add('detected');
-  hint.textContent = "Modelo detectado!";
+  await arSystem.start(); // 🔥 inicia câmera corretamente
+
+  start.style.display = "none";
+  ui.style.display = "block";
 });
 
-marker.addEventListener('markerLost', () => {
-  scanner.classList.remove('detected');
-  hint.textContent = "Aponte para o marcador";
+// eventos
+target.addEventListener("targetFound", () => {
+  scanner.classList.add("detected");
+  hint.textContent = "Imagem detectada!";
+});
+
+target.addEventListener("targetLost", () => {
+  scanner.classList.remove("detected");
+  hint.textContent = "Aponte para a imagem";
 });
 </script>
 
