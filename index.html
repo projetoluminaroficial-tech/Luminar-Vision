@@ -11,18 +11,37 @@
 <style>
 html, body {
   margin: 0;
-  height: 100%;
-  overflow: hidden;
-}
-a-scene {
-  position: fixed;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  background: #000;
 }
+
+/* cena ocupa tudo */
+a-scene {
+  position: fixed !important;
+  inset: 0;
+}
+
+/* 🔥 força câmera full */
 video {
-  width: 100% !important;
-  height: 100% !important;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
   object-fit: cover;
+  z-index: 0;
+}
+
+/* 🔥 força render 3D full */
+canvas {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1;
 }
 </style>
 </head>
@@ -33,7 +52,7 @@ video {
   mindar-image="imageTargetSrc: trilhas/citologia/celula_animal/targets.mind;"
   embedded
   color-space="sRGB"
-  renderer="colorManagement: true"
+  renderer="colorManagement: true; precision: mediump;"
   vr-mode-ui="enabled: false"
   device-orientation-permission-ui="enabled: false"
 >
@@ -43,7 +62,7 @@ video {
   </a-assets>
 
   <!-- LUZ -->
-  <a-entity light="type: ambient; intensity: 1"></a-entity>
+  <a-entity light="type: ambient; intensity: 1.2"></a-entity>
   <a-entity light="type: directional; intensity: 1" position="0 1 1"></a-entity>
 
   <!-- TARGET -->
@@ -51,8 +70,9 @@ video {
 
     <a-entity
       gltf-model="#modelo"
-      scale="1 1 1"
-      position="0 0 0">
+      scale="0.8 0.8 0.8"
+      position="0 0 0"
+      rotation="0 0 0">
     </a-entity>
 
   </a-entity>
