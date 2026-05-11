@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
 </head>
@@ -16,7 +15,7 @@
 
 <a-scene
 
-  mindar-image="imageTargetSrc: trilhas/citologia/trilha_citologia.mind;"
+  mindar-image="imageTargetSrc: trilhas/trilhas_geral.mind;"
 
   embedded
 
@@ -24,10 +23,13 @@
 
   device-orientation-permission-ui="enabled: false"
 
-  style="width:100vw; height:100vh;"
+  style="width:100vw; height:100vh;">
 
->
+  <!-- ASSETS -->
+
   <a-assets>
+
+    <!-- CITOLOGIA -->
 
     <a-asset-item
       id="celulaAnimal"
@@ -49,14 +51,70 @@
       src="trilhas/citologia/models/bacteria_3d.glb">
     </a-asset-item>
 
+
+    <!-- GENÉTICA -->
+
+    <a-asset-item
+      id="dna"
+      src="trilhas/genetica/models/dna_3d.glb">
+    </a-asset-item>
+
+    <a-asset-item
+      id="rna"
+      src="trilhas/genetica/models/rna_3d.glb">
+    </a-asset-item>
+
+    <a-asset-item
+      id="ribossomos"
+      src="trilhas/genetica/models/ribossomos_3d.glb">
+    </a-asset-item>
+
+    <a-asset-item
+      id="cromossomo"
+      src="trilhas/genetica/models/cromossomo_3d.glb">
+    </a-asset-item>
+
+
+    <!-- ANATOMIA -->
+
+    <a-asset-item
+      id="coracao"
+      src="trilhas/anatomia/models/coracao_3d.glb">
+    </a-asset-item>
+
+    <a-asset-item
+      id="cerebro"
+      src="trilhas/anatomia/models/cerebro_3d.glb">
+    </a-asset-item>
+
+    <a-asset-item
+      id="pulmao"
+      src="trilhas/anatomia/models/pulmao_3d.glb">
+    </a-asset-item>
+
+    <a-asset-item
+      id="olho"
+      src="trilhas/anatomia/models/olho_3d.glb">
+    </a-asset-item>
+
   </a-assets>
 
-  <a-entity light="type: ambient; intensity: 1.5"></a-entity>
+  <!-- LUZES -->
+
+  <a-entity
+    light="type: ambient; intensity: 1.5">
+  </a-entity>
 
   <a-entity
     light="type: directional; intensity: 1"
     position="0 1 1">
   </a-entity>
+
+
+  <!-- ========================= -->
+  <!-- CITOLOGIA -->
+  <!-- ========================= -->
+
 
   <!-- TARGET 0 -->
 
@@ -64,10 +122,12 @@
 
     <a-entity
       gltf-model="#celulaAnimal"
-      scale="1.5 1.5 1.5">
+      scale="1.5 1.5 1.5"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
     </a-entity>
 
   </a-entity>
+
 
   <!-- TARGET 1 -->
 
@@ -75,10 +135,12 @@
 
     <a-entity
       gltf-model="#celulaVegetal"
-      scale="1.5 1.5 1.5">
+      scale="1.5 1.5 1.5"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
     </a-entity>
 
   </a-entity>
+
 
   <!-- TARGET 2 -->
 
@@ -86,10 +148,12 @@
 
     <a-entity
       gltf-model="#virus"
-      scale="0.5 0.5 0.5">
+      scale="0.5 0.5 0.5"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
     </a-entity>
 
   </a-entity>
+
 
   <!-- TARGET 3 -->
 
@@ -97,10 +161,130 @@
 
     <a-entity
       gltf-model="#bacteria"
-      scale="0.03 0.03 0.03">
+      scale="0.03 0.03 0.03"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
     </a-entity>
 
   </a-entity>
+
+
+
+  <!-- ========================= -->
+  <!-- GENÉTICA -->
+  <!-- ========================= -->
+
+
+  <!-- TARGET 4 -->
+
+  <a-entity mindar-image-target="targetIndex: 4">
+
+    <a-entity
+      gltf-model="#dna"
+      scale="0.5 0.5 0.5"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+    </a-entity>
+
+  </a-entity>
+
+
+  <!-- TARGET 5 -->
+
+  <a-entity mindar-image-target="targetIndex: 5">
+
+    <a-entity
+      gltf-model="#rna"
+      scale="0.5 0.5 0.5"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+    </a-entity>
+
+  </a-entity>
+
+
+  <!-- TARGET 6 -->
+
+  <a-entity mindar-image-target="targetIndex: 6">
+
+    <a-entity
+      gltf-model="#ribossomos"
+      scale="0.5 0.5 0.5"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+    </a-entity>
+
+  </a-entity>
+
+
+  <!-- TARGET 7 -->
+
+  <a-entity mindar-image-target="targetIndex: 7">
+
+    <a-entity
+      gltf-model="#cromossomo"
+      scale="0.5 0.5 0.5"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+    </a-entity>
+
+  </a-entity>
+
+
+
+  <!-- ========================= -->
+  <!-- ANATOMIA -->
+  <!-- ========================= -->
+
+
+  <!-- TARGET 8 -->
+
+  <a-entity mindar-image-target="targetIndex: 8">
+
+    <a-entity
+      gltf-model="#coracao"
+      scale="0.5 0.5 0.5"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+    </a-entity>
+
+  </a-entity>
+
+
+  <!-- TARGET 9 -->
+
+  <a-entity mindar-image-target="targetIndex: 9">
+
+    <a-entity
+      gltf-model="#cerebro"
+      scale="0.5 0.5 0.5"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+    </a-entity>
+
+  </a-entity>
+
+
+  <!-- TARGET 10 -->
+
+  <a-entity mindar-image-target="targetIndex: 10">
+
+    <a-entity
+      gltf-model="#pulmao"
+      scale="0.5 0.5 0.5"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+    </a-entity>
+
+  </a-entity>
+
+
+  <!-- TARGET 11 -->
+
+  <a-entity mindar-image-target="targetIndex: 11">
+
+    <a-entity
+      gltf-model="#olho"
+      scale="0.5 0.5 0.5"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+    </a-entity>
+
+  </a-entity>
+
+
+  <!-- CAMERA -->
 
   <a-camera
     position="0 0 0"
