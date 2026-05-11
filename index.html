@@ -7,14 +7,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+<script src="https://unpkg.com/aframe-gesture-detector/dist/aframe-gesture-detector.min.js"></script>
+<script src="https://unpkg.com/aframe-gesture-handler-component/dist/aframe-gesture-handler-component.min.js"></script>
 
 </head>
 
 <body>
 
 <a-scene
+
+  gesture-detector
 
   mindar-image="imageTargetSrc: trilhas/citologia/trilha_citologia.mind;"
 
@@ -64,7 +68,8 @@
 
     <a-entity
       gltf-model="#celulaAnimal"
-      scale="1.5 1.5 1.5">
+      scale="1.5 1.5 1.5"
+      gesture-handler>
     </a-entity>
 
   </a-entity>
@@ -75,7 +80,8 @@
 
     <a-entity
       gltf-model="#celulaVegetal"
-      scale="1.5 1.5 1.5">
+      scale="1.5 1.5 1.5"
+      gesture-handler>
     </a-entity>
 
   </a-entity>
@@ -86,7 +92,8 @@
 
     <a-entity
       gltf-model="#virus"
-      scale="0.5 0.5 0.5">
+      scale="0.5 0.5 0.5"
+      gesture-handler>
     </a-entity>
 
   </a-entity>
@@ -97,7 +104,8 @@
 
     <a-entity
       gltf-model="#bacteria"
-      scale="0.01 0.01 0.01">
+      scale="0.01 0.01 0.01"
+      gesture-handler>
     </a-entity>
 
   </a-entity>
