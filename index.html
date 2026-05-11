@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
 <meta charset="utf-8">
+
 <title>Luminar Vision</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-<script src="https://unpkg.com/aframe-gesture-detector/dist/aframe-gesture-detector.min.js"></script>
-<script src="https://unpkg.com/aframe-gesture-handler-component/dist/aframe-gesture-handler-component.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
 </head>
 
 <body>
 
 <a-scene
-
-  gesture-detector
 
   mindar-image="imageTargetSrc: trilhas/citologia/trilha_citologia.mind;"
 
@@ -31,6 +30,7 @@
   style="width:100vw; height:100vh;"
 
 >
+
   <a-assets>
 
     <a-asset-item
@@ -55,12 +55,18 @@
 
   </a-assets>
 
-  <a-entity light="type: ambient; intensity: 1.5"></a-entity>
+
+  <!-- LUZ -->
+
+  <a-entity
+    light="type: ambient; intensity: 1.5">
+  </a-entity>
 
   <a-entity
     light="type: directional; intensity: 1"
     position="0 1 1">
   </a-entity>
+
 
   <!-- TARGET 0 -->
 
@@ -68,15 +74,11 @@
 
     <a-entity
       gltf-model="#celulaAnimal"
-      scale="1.5 1.5 1.5"
-      gesture-handler="
-        enabled: true;
-        rotationFactor: 5;
-        minScale: 0.3;
-        maxScale: 3>
+      scale="1.5 1.5 1.5">
     </a-entity>
 
   </a-entity>
+
 
   <!-- TARGET 1 -->
 
@@ -84,11 +86,11 @@
 
     <a-entity
       gltf-model="#celulaVegetal"
-      scale="1.5 1.5 1.5"
-      gesture-handler>
+      scale="1.5 1.5 1.5">
     </a-entity>
 
   </a-entity>
+
 
   <!-- TARGET 2 -->
 
@@ -96,11 +98,11 @@
 
     <a-entity
       gltf-model="#virus"
-      scale="0.5 0.5 0.5"
-      gesture-handler>
+      scale="0.5 0.5 0.5">
     </a-entity>
 
   </a-entity>
+
 
   <!-- TARGET 3 -->
 
@@ -108,11 +110,12 @@
 
     <a-entity
       gltf-model="#bacteria"
-      scale="0.01 0.01 0.01"
-      gesture-handler>
+      scale="0.01 0.01 0.01">
     </a-entity>
 
   </a-entity>
+
+  <!-- CAMERA -->
 
   <a-camera
     position="0 0 0"
@@ -122,4 +125,5 @@
 </a-scene>
 
 </body>
+
 </html>
