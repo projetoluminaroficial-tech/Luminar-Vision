@@ -69,7 +69,11 @@
     <a-entity
       gltf-model="#celulaAnimal"
       scale="1.5 1.5 1.5"
-      gesture-handler>
+      gesture-handler="
+        enabled: true;
+        rotationFactor: 5;
+        minScale: 0.3;
+        maxScale: 3>
     </a-entity>
 
   </a-entity>
