@@ -1,32 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <title>Luminar Vision</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  #status {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 999;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 10px;
+    font-family: Arial;
+    border-radius: 8px;
+  }
+</style>
 </head>
 
 <body>
 
+<div id="status">
+  Aguardando reconhecimento...
+</div>
+
 <a-scene
+
+  id="scene"
 
   mindar-image="imageTargetSrc: trilhas/citologia/trilha_citologia.mind;"
 
   embedded
 
+  color-space="sRGB"
+
+  renderer="colorManagement: true; physicallyCorrectLights"
+
   vr-mode-ui="enabled: false"
 
   device-orientation-permission-ui="enabled: false"
 
-  style="width:100vw; height:100vh;"
-
 >
+
+  <!-- ASSETS -->
+
   <a-assets>
 
     <a-asset-item
@@ -51,7 +79,11 @@
 
   </a-assets>
 
-  <a-entity light="type: ambient; intensity: 1.5"></a-entity>
+  <!-- LUZ -->
+
+  <a-entity
+    light="type: ambient; intensity: 1.5">
+  </a-entity>
 
   <a-entity
     light="type: directional; intensity: 1"
@@ -60,54 +92,104 @@
 
   <!-- TARGET 0 -->
 
-  <a-entity mindar-image-target="targetIndex: 0">
+  <a-entity
+    id="target0"
+    mindar-image-target="targetIndex: 0">
 
     <a-entity
       gltf-model="#celulaAnimal"
-      scale="1.5 1.5 1.5">
+      scale="0.3 0.3 0.3"
+      rotation="0 0 0"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
     </a-entity>
 
   </a-entity>
 
   <!-- TARGET 1 -->
 
-  <a-entity mindar-image-target="targetIndex: 1">
+  <a-entity
+    id="target1"
+    mindar-image-target="targetIndex: 1">
 
     <a-entity
       gltf-model="#celulaVegetal"
-      scale="1.5 1.5 1.5">
+      scale="0.3 0.3 0.3"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
     </a-entity>
 
   </a-entity>
 
   <!-- TARGET 2 -->
 
-  <a-entity mindar-image-target="targetIndex: 2">
+  <a-entity
+    id="target2"
+    mindar-image-target="targetIndex: 2">
 
     <a-entity
       gltf-model="#virus"
-      scale="1.5 1.5 1.5">
+      scale="0.3 0.3 0.3"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
     </a-entity>
 
   </a-entity>
 
   <!-- TARGET 3 -->
 
-  <a-entity mindar-image-target="targetIndex: 3">
+  <a-entity
+    id="target3"
+    mindar-image-target="targetIndex: 3">
 
     <a-entity
       gltf-model="#bacteria"
-      scale="1.5 1.5 1.5">
+      scale="0.3 0.3 0.3"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
     </a-entity>
 
   </a-entity>
 
+  <!-- CAMERA -->
+
   <a-camera
     position="0 0 0"
-    look-controls="enabled: true">
+    look-controls="enabled: false">
   </a-camera>
 
 </a-scene>
+
+<script>
+
+const status = document.querySelector("#status");
+
+const targets = [
+  document.querySelector("#target0"),
+  document.querySelector("#target1"),
+  document.querySelector("#target2"),
+  document.querySelector("#target3")
+];
+
+targets.forEach((target, index) => {
+
+  target.addEventListener("targetFound", () => {
+
+    console.log("TARGET ENCONTRADO:", index);
+
+    status.innerHTML =
+      "Target encontrado: " + index;
+
+  });
+
+  target.addEventListener("targetLost", () => {
+
+    console.log("TARGET PERDIDO:", index);
+
+    status.innerHTML =
+      "Aguardando reconhecimento...";
+
+  });
+
+});
+
+</script>
 
 </body>
 </html>
